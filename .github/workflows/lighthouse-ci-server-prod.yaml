@@ -10,7 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Wait / Sleep
-        uses: jakejarvis/wait-action@v0.1.1
         run: sleep 30s
         shell: bash
       - name: run Lighthouse CI
