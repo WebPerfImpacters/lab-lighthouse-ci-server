@@ -1,8 +1,8 @@
-name: Lighthouse CI
+name: Lighthouse CI Server
 on: pull_request
 jobs:
   lhci:
-    name: Lighthouse CI
+    name: Lighthouse CI Server
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,6 +19,7 @@ jobs:
       - name: run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v9
         with:
+          runs: 3
           urls: |
             ${{ steps.waitFor200.outputs.url }}
             ${{ steps.waitFor200.outputs.url }}about/
