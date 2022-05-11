@@ -1,0 +1,33 @@
+name: Lighthouse CI
+on: pull_request
+jobs:
+  lhci:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - name: Waiting for 200 from the Netlify Preview
+        uses: jakepartusch/wait-for-netlify-action@v1.3
+        id: waitFor200
+        with:
+          site_name: "eleventy-lhci"
+          max_timeout: 60
+      - name: run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          urls: |
+            ${{ steps.waitFor200.outputs.url }}
+            ${{ steps.waitFor200.outputs.url }}about/
+            ${{ steps.waitFor200.outputs.url }}blog/
+            ${{ steps.waitFor200.outputs.url }}feature/
+            ${{ steps.waitFor200.outputs.url }}product/
+            ${{ steps.waitFor200.outputs.url }}testimonial/
+          configPath: './lighthouserc-ci-server.js'
+          serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
+          serverToken: ${{ secrets.LHCI_TOKEN }}
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
