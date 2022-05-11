@@ -1,0 +1,32 @@
+name: Lighthouse CI Server Production
+on:
+  push:
+    branches:
+      - main
+jobs:
+  lhci:
+    name: Lighthouse CI Server Production
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Wait / Sleep
+        uses: jakejarvis/wait-action@v0.1.1
+        run: sleep 30s
+        shell: bash
+      - name: run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v9
+        with:
+          runs: 3
+          urls: |
+            https://lab-lighthouse-ci-server.netlify.app/ 
+            https://lab-lighthouse-ci-server.netlify.app/about/
+            https://lab-lighthouse-ci-server.netlify.app/blog/
+            https://lab-lighthouse-ci-server.netlify.app/feature/
+            https://lab-lighthouse-ci-server.netlify.app/product/
+            https://lab-lighthouse-ci-server.netlify.app/testimonial/
+          configPath: "./lighthouserc-ci-server.js"
+          serverBaseUrl: ${{ secrets.LHCI_SERVER_URL }}
+          serverToken: ${{ secrets.LHCI_TOKEN }}
+          uploadArtifacts: true
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
