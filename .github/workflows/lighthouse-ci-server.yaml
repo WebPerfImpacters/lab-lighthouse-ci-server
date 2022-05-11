@@ -5,16 +5,12 @@ jobs:
     name: Lighthouse CI Server
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.x
+      - uses: actions/checkout@v3
       - name: Waiting for 200 from the Netlify Preview
         uses: jakepartusch/wait-for-netlify-action@v1.3
         id: waitFor200
         with:
-          site_name: wpi-lab-lighthouse-ci-server
+          site_name: 'lab-lighthouse-ci-server'
           max_timeout: 60
       - name: run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v9
