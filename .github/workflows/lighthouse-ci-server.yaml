@@ -14,7 +14,7 @@ jobs:
         uses: jakepartusch/wait-for-netlify-action@v1.3
         id: waitFor200
         with:
-          site_name: "wpi-lab-lighthouse-ci-server"
+          site_name: wpi-lab-lighthouse-ci-server
           max_timeout: 60
       - name: run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v9
